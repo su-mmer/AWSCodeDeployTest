@@ -6,6 +6,13 @@ terraform {
       version = "~> 5.0"
     }
   }
+  cloud {
+    organization = "hee"
+
+    workspaces {
+      name = "AWSCodeDeployTest"
+    }
+  }
 }
 
 provider "aws" {
@@ -28,7 +35,7 @@ resource "aws_vpc" "tfcd-vpc" {
   }
 }
 
-# ------ AWS Subnet ------ #
+// subnet
 resource "aws_subnet" "public-2a" {
   vpc_id            = aws_vpc.tfcd-vpc.id
   cidr_block        = "10.0.180.0/28"
@@ -77,6 +84,18 @@ resource "aws_security_group" "ec2-default" {
     Name = "${var.name}-ec2"
   }
 }
+
+# 보안그룹에 들어갈 규칙 생성
+# resource "aws_security_group_rule" "ingress" {  // 인바운드 트래픽
+#   for_each          = var.inbound_rules  // 
+#   type              = "ingress"  // inbound 트래픽
+#   from_port         = each.value.from_port  // 시작 포트
+#   to_port           = each.value.to_port  // 마지막 포트
+#   protocol          = each.value.protocol  // 프로토콜 방식
+#   cidr_blocks       = [each.value.cidr_block]  // 허용 IP 범위
+#   description       = each.value.description  // 설명
+#   security_group_id = aws_security_group.security_group.id  // 생성한 보안그룹에 보안그룹의 id를 이용해 규칙과 연결
+# }
 
 resource "aws_security_group_rule" "sg_ec2_http" {
   type                     = "ingress"
