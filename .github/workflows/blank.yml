@@ -7,8 +7,16 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: github.ref_name == 'main'
     environment: prd
     steps:
       - uses: actions/checkout@v3
       - name: Run a one-line script
         run: echo Hello, world!
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3
+      - name: Run a one-line script 2
+        run: echo Hello, world !!!! 22
