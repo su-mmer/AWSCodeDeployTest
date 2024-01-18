@@ -7,8 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: github.ref_name == 'main'
-    environment: prd
+    # if: github.ref_name == 'main'
+    environment: ${{ github.ref_name }}
     steps:
       - uses: actions/checkout@v3
       - name: Run a one-line script
