@@ -17,6 +17,6 @@ jobs:
     # needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@3
+      - uses: actions/checkout@v3
       - name: Run a one-line script 2
         run: echo Hello, world !!!! 22
